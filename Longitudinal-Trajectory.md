@@ -12,7 +12,7 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
 ###Linear Mixed Effects Regression (LMER)  
 -------------------------  
 **Mechanism:**  
-* mean chenge over time  
+* mean change over time  
 * Components: 
 
 | Component      |                          Description     | Level of Effect  | Symbol   |    
