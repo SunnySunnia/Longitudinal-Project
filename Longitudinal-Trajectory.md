@@ -25,14 +25,17 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
 
 **Algorithm:**  
 * Date must be in long-format: `reshape()`  
+    Long, page 76-77  
+  ```r
+  MPLS = reshape(data = MPLS, varying = 2:5, v.names = "read", timevar = "grade", times = 5:8, idvar = "subid" , direction = "long" )
+  ```
 * 
 
 **References:**  
-* 
 ```
-  Long J. Longitudinal Data Analysis For The Behavioral Sciences Using R. Thousand Oaks, Calif.: SAGE; 2012.
-  ```
-* 
+  Long, J. (2012). Longitudinal data analysis for the behavioral sciences using R. Thousand Oaks, Calif.: SAGE.
+```  
+
 
 ###Growth Curve Modeling (GCM)  
 -------------------  
