@@ -28,7 +28,8 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
     Long, page 76-77  
 
   ```r
-  MPLS = reshape(data = MPLS, varying = 2:5, v.names = "read", timevar = "grade", times = 5:8, idvar = "subid" , direction = "long" )
+  MPLS = reshape(data = MPLS, varying = 2:5, v.names = "read", 
+                 timevar = "grade", times = 5:8, idvar = "subid" , direction = "long" )
   ```
 * 
 
