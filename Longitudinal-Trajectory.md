@@ -21,7 +21,17 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
 | Random Effects | Individual deviations from fixed effects | Individual       | b        |       
 | Random Error   | Regression error term                    | Individual       | \epsilon |     
 
+* 
 
+**Algorithm:**  
+* Date must be in long-format: `reshape()`  
+* 
+
+**References:**  
+* 
+```
+  Long J. Longitudinal Data Analysis For The Behavioral Sciences Using R. Thousand Oaks, Calif.: SAGE; 2012.
+  ```
 * 
 
 ###Growth Curve Modeling (GCM)  
