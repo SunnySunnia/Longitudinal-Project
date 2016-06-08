@@ -9,6 +9,20 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
 
 ##Analysis/Modeling approaches:  
 
+###Linear Mixed Effects Regression (LMER)  
+-------------------------  
+**Mechanism:**  
+* mean chenge over time  
+* Components:  
+  Component   | Description     | Level of Effect  | Symbol  
+--------------|-----------------|------------------|-------------  
+Fixed Effects |Regression coefficients| Group      | \beta  
+Random Effects|Individual deviations from fixed effects|Individual| b  
+Random Error  |Regression error term|Individual    | \epsilon  
+
+
+* 
+
 ###Growth Curve Modeling (GCM)  
 -------------------  
 **Mechanism:**  
