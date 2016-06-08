@@ -24,6 +24,12 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
 * 
 
 **Algorithm:**  
+* Example data: MPLS  
+
+subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att  
+1 | 172 | 185 | 179 | 194 | HHM | F | Afr | 0 | N | 0.94  
+7 | 199 | 208 | 213 | 218 | POV | M | Afr | 0 | N | 0.97  
+
 * Date must be in long-format: `reshape()`  
     Long, page 76-77  
 
@@ -31,7 +37,12 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
   MPLS = reshape(data = MPLS, varying = 2:5, v.names = "read", 
                  timevar = "grade", times = 5:8, idvar = "subid" , direction = "long" )
   ```
+* MPLS.L  
+
+
+
 * 
+
 
 **References:**  
 ```
