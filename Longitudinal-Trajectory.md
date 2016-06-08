@@ -13,12 +13,13 @@ Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behav
 -------------------------  
 **Mechanism:**  
 * mean chenge over time  
-* Components:  
-  Component   |                                   Description     | Level of Effect  | Symbol    
- ---------- | ----------- | ---------------- | -----     
- Fixed Effects | Regression coefficients                            | Group            | \beta        
- Random Effects | Individual deviations from fixed effects           | Individual        | b            
- Random Error  | Regression error term                              | Individual        | \epsilon     
+* Components: 
+
+| Component      |                          Description     | Level of Effect  | Symbol   |    
+|--------------- |:----------------------------------------:|:----------------:| --------:|    
+| Fixed Effects  | Regression coefficients                  | Group            | \beta    |       
+| Random Effects | Individual deviations from fixed effects | Individual       | b        |       
+| Random Error   | Regression error term                    | Individual       | \epsilon |     
 
 
 * 
