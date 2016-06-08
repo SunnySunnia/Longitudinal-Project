@@ -83,8 +83,10 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 
 ###Software and Packages  
 -----------------  
-**R**: `crimCV`: this software fits finite mixtures of `Zero-inflated Poisson` models to longitudinal count data.  
-`lme4`: 
+**R**:  
+* `crimCV`: this software fits finite mixtures of `Zero-inflated Poisson` models to longitudinal count data.  
+
+* `lme4`: 
 ```r
 lmer(read ~ 1+ grade + ( 1 + grade | subid ), data = MPLS.LS, REML = FALSE)  
 ```  
