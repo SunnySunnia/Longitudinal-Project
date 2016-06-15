@@ -84,6 +84,17 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 
 **Algorithm:**  
 * the unconditional probability of observing individual's longitudinal sequence of behavioral measurements is the sum of the probability of the bahaviors, given the individual belongs to specific group, weighted by the probability of belonging to the group.  
+* posterior probabilities for group assignment: given the modeled trajectory, what is the probability of a group assignment.  
+* Y_i = {y_i1, y_i2,..., y_iT} : a longitudinal sequence of measurements on individual i over T periods.  
+* P(Y_i) : probability of Y_i: unconditional probability of observing individual i's longitudinal sequence of behavioral measurements Y_i     
+        count data -- Poisson distribution  
+        censored data -- censoredd normal distribution  
+        binary data -- binary logit distribution  
+        P(Y_i) = sum across all j {pi_j * P^j(Y_i)}  
+
+* P^j(Y_i) : probability of Y_i given membership in group j.  
+* pi_j : probability of a randomly chosen population member belonging to group j.  
+* goal: estimate a set of parameters to maximize P(Y_i)  
 * 
 
 
