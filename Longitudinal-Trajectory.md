@@ -97,7 +97,7 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 * `pi_j` : probability of a randomly chosen population member belonging to group `j`.  
         - `pi_j = e^(theta_j) / sum all j {e^(theta_j)}`  
 * `p^j(y_it)` : probability distribution function of `y_it` given membership in group `j`.  
-        - grouop-specific specification.  
+        - **group-specific specification**.  
         - for each individual within a given trajectory group `j`, the distribution of `y_it` for period `t` is independent of realized level of the outcome in prior periods `y_it-1`, `y_it-2`, ...  
         - example: the `tobit` model in econometrics  
         - Constructed from the following assumptions:  
