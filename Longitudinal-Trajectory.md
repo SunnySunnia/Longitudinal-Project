@@ -69,7 +69,7 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 * pro: if the general population is thought to be composed of distinct sub-populations, each following a conventional GCM.  
 * con: if you dont know how many sub-populations are there.  
 
-**Algorith:**  
+**Algorithm:**  
 *  
 
 ###Group-Based Trajectory Modeling (GBTM)  
@@ -78,6 +78,12 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 * application of finite mixture  
 * assumes the population is composed of a mixture of distinct groups defined by their `developmental trajectory`.  
 * pro: takes no stand on the population distribution of trajectories and instead uses the trajectory groups as a statistical device for approximating the unknown distribution of trajectories across population members.  
+* the model's estimated parameters are from the product of maximum likelihood estimation.  
+* the shapes of the trajectories are described by a polynomial function of age or time.  
+*   
+
+**Algorithm:**  
+* the unconditional probability of observing individual's longitudinal sequence of behavioral measurements is the sum of the probability of the bahaviors, given the individual belongs to specific group, weighted by the probability of belonging to the group.  
 * 
 
 
