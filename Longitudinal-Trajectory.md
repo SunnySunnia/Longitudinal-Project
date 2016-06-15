@@ -87,26 +87,26 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 * posterior probabilities for group assignment: given the modeled trajectory, what is the probability of a group assignment.  
 * `Y_i = {y_i1, y_i2,..., y_iT}` : a longitudinal sequence of measurements on individual `i` over `T` periods.  
 * `P(Y_i)` : probability of `Y_i`: unconditional probability of observing individual `i`'s longitudinal sequence of behavioral measurements `Y_i`     
-        count data -- Poisson distribution  
-        censored data -- censoredd normal distribution  
-        binary data -- binary logit distribution  
-        `P(Y_i) = sum across all j {pi_j * P^j(Y_i)}`  
+        - count data -- Poisson distribution  
+        - censored data -- censoredd normal distribution  
+        - binary data -- binary logit distribution  
+        - `P(Y_i) = sum across all j {pi_j * P^j(Y_i)}`  
 
 * `P^j(Y_i)` : probability of `Y_i` given membership in group `j`.  
-        `P^j(Y_i) = product over T { p^j(y_it) }`  
+        - `P^j(Y_i) = product over T { p^j(y_it) }`  
 * `pi_j` : probability of a randomly chosen population member belonging to group `j`.  
-        `pi_j = e^(theta_j) / sum all j {e^(theta_j)}`  
+        - `pi_j = e^(theta_j) / sum all j {e^(theta_j)}`  
 * `p^j(y_it)` : probability distribution function of `y_it` given membership in group `j`.  
-        grouop-specific specification.  
-        for each individual within a given trajectory group `j`, the distribution of `y_it` for period `t` is independent of realized level of the outcome in prior periods `y_it-1`, `y_it-2`, ...  
-        example: the `tobit` model in econometrics  
-        Constructed from the following assumptions:  
+        - grouop-specific specification.  
+        - for each individual within a given trajectory group `j`, the distribution of `y_it` for period `t` is independent of realized level of the outcome in prior periods `y_it-1`, `y_it-2`, ...  
+        - example: the `tobit` model in econometrics  
+        - Constructed from the following assumptions:  
             count data -- Poisson distribution  
             censored data -- censoredd normal distribution  
             binary data -- binary logit distribution  
 * `y_it` : measuring individual `i`'s potentiaal for engaging in a behavior at age/time `t`.  
-        example : `y_it = beta_j0 + beta_j1 *Age_it + beta_j2 * (Age_it)^2 + beta_j3 * (Age_it)^3 + epsilon_it`  
-        `beta_jk` : the `k`th coefficient/parameter that determines the shape of the individual `i`'s behavior given membership in group `j`.  
+        - example : `y_it = beta_j0 + beta_j1 *Age_it + beta_j2 * (Age_it)^2 + beta_j3 * (Age_it)^3 + epsilon_it`  
+        - `beta_jk` : the `k`th coefficient/parameter that determines the shape of the individual `i`'s behavior given membership in group `j`.  
 * goal: estimate a set of parameters to maximize `P(Y_i)`  
 * the likelihood for the entire sample of N individuals:  
         `L = product over N { P(Y_i) }`  
