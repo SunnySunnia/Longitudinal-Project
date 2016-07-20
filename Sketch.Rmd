@@ -1,0 +1,98 @@
+---
+title: "Sketch"
+author: "Sunny"
+date: "July 20, 2016"
+output: html_document
+---
+
+```{r packages,echo=FALSE, warning=FALSE, message=FALSE}
+setwd("C:/Longitudinal-Project")
+#install.packages("crimCV")
+library(crimCV)
+library(reshape2)
+library(dplyr)
+#install.packages("mi)
+library(mi)
+library(gplots)
+```
+
+
+```{r import, echo=FALSE, warning=FALSE, message=FALSE}
+traj_test <- read.csv("C:/Longitudinal-Project/traj_test.csv", stringsAsFactors=FALSE)
+
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+sub3069 = traj_test[which(traj_test$ID==3069),]
+plot(x=sub3069$Age,y = sub3069$C3.Power.s0, type = "l", main = "Subject 3069",ylim=c(min(traj_test[,5:1030]),max(traj_test[,5:1030])))
+colors=rainbow(100)
+for(j in 6:1030){
+points(x = sub3069$Age, y = sub3069[,j], type = "l",col = colors[j])
+}
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+sub4061 = traj_test[which(traj_test$ID==4061),]
+plot(x=sub4061$Age,y = sub4061$C3.Power.s0, type = "l", main = "Subject 4061", ylim=c(min(sub4061[,5:1030]),max(sub4061[,5:1030])))
+colors=rainbow(100)
+for(j in 6:1030){
+points(x = sub4061$Age, y = sub4061[,j], type = "l",col = colors[j])
+}
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+unique(traj_test$Age)
+sub_age3 = subset(traj_test,Age==3)
+sub_age6 = subset(traj_test,Age==6)
+sub_age9 = subset(traj_test,Age==9)
+sub_age12 = subset(traj_test,Age==12)
+sub_age18 = subset(traj_test,Age==18)
+sub_age24 = subset(traj_test,Age==24)
+sub_age36 = subset(traj_test,Age==36)
+
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+indicator = ifelse(sub_age3$class=="asd", "red",ifelse(sub_age3$class=="typ","green","black"))
+heatmap(as.matrix(scale(sub_age3[,5:1030])),RowSideColors = indicator, main = "3 months")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+indicator = ifelse(sub_age6$class=="asd", "red",ifelse(sub_age6$class=="typ","green","black"))
+heatmap(as.matrix(scale(sub_age6[,5:1030])),RowSideColors = indicator, main = "6 months")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+indicator = ifelse(sub_age9$class=="asd", "red",ifelse(sub_age9$class=="typ","green","black"))
+heatmap(as.matrix(scale(sub_age9[,5:1030])),RowSideColors = indicator, main = "9 months")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+indicator = ifelse(sub_age12$class=="asd", "red",ifelse(sub_age12$class=="typ","green","black"))
+heatmap(as.matrix(scale(sub_age12[,5:1030])),RowSideColors = indicator, main = "12 months")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+indicator = ifelse(sub_age18$class=="asd", "red",ifelse(sub_age18$class=="typ","green","black"))
+heatmap(as.matrix(scale(sub_age18[,5:1030])),RowSideColors = indicator, main = "18 months")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+indicator = ifelse(sub_age24$class=="asd", "red",ifelse(sub_age24$class=="typ","green","black"))
+heatmap(as.matrix(scale(sub_age24[,5:1030])),RowSideColors = indicator, main = "24 months")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+indicator = ifelse(sub_age36$class=="asd", "red",ifelse(sub_age36$class=="typ","green","black"))
+heatmap(as.matrix(scale(sub_age36[,5:1030])),RowSideColors = indicator, main = "36 months")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
