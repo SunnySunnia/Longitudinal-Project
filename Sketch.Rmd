@@ -24,7 +24,7 @@ traj_test <- read.csv("C:/Longitudinal-Project/traj_test.csv", stringsAsFactors=
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 sub4138 = traj_test[which(traj_test$ID==4138),]
-plot(x=sub4138$Age,y = sub4138$C3.Power.s0, type = "l", main = "Subject 4138",ylim=c(min(traj_test[,5:1030]),max(traj_test[,5:1030])))
+plot(x=sub4138$Age,y = sub4138$C3.Power.s0, type = "l", main = "Subject 4138 (asd)",ylim=c(min(traj_test[,5:1030]),max(traj_test[,5:1030])))
 colors=rainbow(100)
 for(j in 6:1030){
 points(x = sub4138$Age, y = sub4138[,j], type = "l",col = colors[j])
@@ -33,7 +33,7 @@ points(x = sub4138$Age, y = sub4138[,j], type = "l",col = colors[j])
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 sub4061 = traj_test[which(traj_test$ID==4061),]
-plot(x=sub4061$Age,y = sub4061$C3.Power.s0, type = "l", main = "Subject 4061", ylim=c(min(sub4061[,5:1030]),max(sub4061[,5:1030])))
+plot(x=sub4061$Age,y = sub4061$C3.Power.s0, type = "l", main = "Subject 4061 (typ)", ylim=c(min(sub4061[,5:1030]),max(sub4061[,5:1030])))
 colors=rainbow(100)
 for(j in 6:1030){
 points(x = sub4061$Age, y = sub4061[,j], type = "l",col = colors[j])
@@ -88,7 +88,10 @@ heatmap(as.matrix(scale(sub_age36[,5:1030])),RowSideColors = indicator, main = "
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-
+res = data.frame(NA)
+for(j in 5:1030){
+  
+}
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}

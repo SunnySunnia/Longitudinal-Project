@@ -128,6 +128,12 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 
 ###Application/Approach with EEG data:  
 ------------------------  
+**Goal**  
+- find trends/general trajectories of the EEG measurements for normal and autism group  
+- given a set of measures over time from a new subject,  able to compare against the group trajectories and determine whether the new trajectories are more likely to belong to the normal group or the autism group  
+	- risk assessment given not just a one-time measurement but a trajectory of measurements  
+ 
+
 **Data Structure**  
 - multiple records for one subject (at time points 3, 6, 9, 12, 18, 24, 36 months of age)  
 - Identifiers: 
@@ -144,7 +150,24 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 ` [0,1,2,3,4,5]`  
 	Example: `C3.Power.s0`  
 
+**Key Steps**  
+- plot profile plots for subjects from `asd` and `typ` group    
+- observe/fit trends  
+- develop a determination method  
 
+**Issues**  
+- feature selection  
+	- one more dimension to consider--time!  
+- too many features (1025)  
+- utilize time variable  
+	- slopes between two time points   
+	- fit trajectories with polynomials, make the coefficients as the new features for each subject of a given measurement  
+
+**Approaches**  
+- feature selection:  
+	- ordinary feature selection tools only depended on one-time measurement, do not consider time or change over time.  
+	- we want to make our model sensitive to time or change over time.  
+	-*feature ranking* based on differences on average trajectories of the groups
 
 
 
