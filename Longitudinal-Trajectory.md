@@ -126,6 +126,28 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 * posterior probabilities for group assignment: given the modeled trajectory, what is the probability of a group assignment.  
         - 
 
+###Application/Approach with EEG data:  
+------------------------  
+**Data Structure**  
+- multiple records for one subject (at time points 3, 6, 9, 12, 18, 24, 36 months of age)  
+- Identifiers: 
+	- ID: subject ID 
+	- Age: time variable
+	- gender
+	- class: indicator (asd-autism, typ-normal, hra-high risk autism but do not have autism)  
+- Measurements:  
+	- sensor or channel (19):  
+` ["C3", "C4", "O1", "O2", "Cz", "F3", "F4", "F7", "F8", "Fz", "Fp1", "Fp2", "P3", "P4", "Pz", "T7", "T8", "P7", "P8"]`  
+	- features (9):   
+` ['Power', 'SampE', 'RR', 'DET', 'LAM', 'L_entr', 'L_max', 'L_mean', 'TT']`  
+	- Frequency band or scale (6):  
+` [0,1,2,3,4,5]`  
+	Example: `C3.Power.s0`  
+
+
+
+
+
 
 ###Software and Packages  
 -----------------  

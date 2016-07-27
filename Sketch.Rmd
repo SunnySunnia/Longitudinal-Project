@@ -23,11 +23,11 @@ traj_test <- read.csv("C:/Longitudinal-Project/traj_test.csv", stringsAsFactors=
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-sub3069 = traj_test[which(traj_test$ID==3069),]
-plot(x=sub3069$Age,y = sub3069$C3.Power.s0, type = "l", main = "Subject 3069",ylim=c(min(traj_test[,5:1030]),max(traj_test[,5:1030])))
+sub4138 = traj_test[which(traj_test$ID==4138),]
+plot(x=sub4138$Age,y = sub4138$C3.Power.s0, type = "l", main = "Subject 4138",ylim=c(min(traj_test[,5:1030]),max(traj_test[,5:1030])))
 colors=rainbow(100)
 for(j in 6:1030){
-points(x = sub3069$Age, y = sub3069[,j], type = "l",col = colors[j])
+points(x = sub4138$Age, y = sub4138[,j], type = "l",col = colors[j])
 }
 ```
 
