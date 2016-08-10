@@ -163,7 +163,10 @@ res_asd_typ_bin=res_asd_typ
 for(col in c(2:8)){
   res_asd_typ_bin[,col]=ifelse(res_asd_typ_bin[,col]>=0.05,0,1)
 }
-res_asd_typ_bin
+res_asd_typ_bin$age3t12 = apply(res_asd_typ_bin[2:5],1,sum)
+res_asd_typ_bin_sub=subset(res_asd_typ_bin,age3t12==4)
+dim(res_asd_typ_bin_sub)
+res_asd_typ_bin_sub
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
