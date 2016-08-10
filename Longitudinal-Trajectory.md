@@ -158,6 +158,7 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 **Issues**  
 - feature selection  
 	- one more dimension to consider--time!  
+	- some activities may only be caught by specific scale of the channel-feature pair
 - too many features (1025)  
 - utilize time variable  
 	- slopes between two time points   
@@ -167,7 +168,11 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 - feature selection:  
 	- ordinary feature selection tools only depended on one-time measurement, do not consider time or change over time.  
 	- we want to make our model sensitive to time or change over time.  
-	-*feature ranking* based on differences on average trajectories of the groups
+	-**feature ranking** based on differences on average trajectories of the groups  
+		- for each feature, find the average trajectories for the groups
+		- there are differences in distances/area between the curves
+		- there are differences in the coefficients when fit the curves with polynomials  
+	-**slope comparison** 
 
 
 

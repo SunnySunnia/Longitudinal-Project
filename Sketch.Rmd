@@ -13,7 +13,10 @@ library(reshape2)
 library(dplyr)
 #install.packages("mi)
 library(mi)
+library(ggplot2)
 library(gplots)
+#install.packages("tigerstats")
+library(tigerstats)
 ```
 
 
@@ -88,14 +91,62 @@ heatmap(as.matrix(scale(sub_age36[,5:1030])),RowSideColors = indicator, main = "
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-res = data.frame(NA)
-for(j in 5:1030){
-  
-}
+traj_test = mutate(traj_test, class2 = ifelse(class=="asd","asd","typ"))
 ```
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C3.SampE.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
 
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C3.SampE.s1) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C3.SampE.s2) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C3.Power.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+c3sampes2_typ = polyfitGC(C3.SampE.s2~Age, data = traj_test%>%filter(class2=="typ"),degree = 4)
+c3sampes2_asd = polyfitGC(C3.SampE.s2~Age, data = traj_test%>%filter(class2=="asd"),degree = 4)
+plot(c3sampes2_asd)
+plot(c3sampes2_typ)
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Fp1.SampE.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Fp1.SampE.s2) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Fp1.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+res = c("variable", "p-value")
+t.test(C3.SampE.s2~class, data = subset(traj_test,class != "hra"))
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
