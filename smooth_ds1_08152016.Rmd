@@ -1,0 +1,400 @@
+---
+title: "Sketch"
+author: "Sunny"
+date: "July 20, 2016"
+output: html_document
+---
+
+```{r packages,echo=FALSE, warning=FALSE, message=FALSE}
+setwd("C:/Longitudinal-Project")
+#install.packages("crimCV")
+library(crimCV)
+library(reshape2)
+library(dplyr)
+#install.packages("mi)
+library(mi)
+library(ggplot2)
+library(gplots)
+#install.packages("tigerstats")
+library(tigerstats)
+library(rgl)
+library(car)
+```
+
+
+```{r import, echo=FALSE, warning=FALSE, message=FALSE}
+traj_test <- data.frame(read.delim("C:/Longitudinal-Project/isp_dataset_1.txt", stringsAsFactors=FALSE))
+names(traj_test)[1:4]=c("ID","Age","gender","class")
+
+strip = function(x){
+  res=strsplit(x," ")[[1]][which(strsplit(x," ")[[1]]>2)]
+}
+
+traj_test$class = sapply(traj_test[,4],strip)
+
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+traj_test = mutate(traj_test, class2 = ifelse(class=="asd","asd","typ"))
+traj_test = mutate(traj_test, class1 = ifelse(class=="typ",1, ifelse(class=="asd", 2,3)))
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+res_asd_typ = data.frame(matrix(NA, nrow=912, ncol = 8))
+names(res_asd_typ)=c("variable","age3", "age6","age9", "age12","age18","age24","age36")
+age_list=sort(unique(traj_test$Age))
+i = 1
+for(var in names(traj_test)[5:916]){
+  test_set = subset(traj_test[,c("Age","class",var)],class != "hra")
+  res_asd_typ[i,1]=var
+  for(age in unique(test_set$Age)){
+    test_age = subset(test_set,Age==age)
+    tt = t.test(subset(test_age,class=="asd")[,3],subset(test_age,class=="typ")[,3])
+    res_asd_typ[i,which(age_list==age)+1]=tt$p.value
+  }
+  i = i+1
+}
+res_asd_typ_bin=res_asd_typ
+for(col in c(2:8)){
+  res_asd_typ_bin[,col]=ifelse(res_asd_typ_bin[,col]>=0.05,0,1)
+}
+```
+
+Number of variables that have significant average difference between `asd` and `typ` for at least one time point:  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+res_asd_typ_bin$age3t12 = apply(res_asd_typ_bin[2:5],1,sum)
+res_asd_typ_bin_sub=subset(res_asd_typ_bin,age3t12==4)
+res_asd_typ_bin$age3t36 = apply(res_asd_typ_bin[2:8],1,sum)
+res_asd_typ_3t36=subset(res_asd_typ_bin,age3t36>=1)
+dim(res_asd_typ_bin_sub)
+dim(res_asd_typ_3t36)
+#res_asd_typ_3t36
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+res_asd_hra = data.frame(matrix(NA, nrow=912, ncol = 8))
+names(res_asd_hra)=c("variable","age3", "age6","age9", "age12","age18","age24","age36")
+age_list=sort(unique(traj_test$Age))
+i = 1
+for(var in names(traj_test)[5:916]){
+  test_set = subset(traj_test[,c("Age","class",var)],class != "typ")
+  res_asd_hra[i,1]=var
+  for(age in unique(test_set$Age)){
+    test_age = subset(test_set,Age==age)
+    tt = t.test(subset(test_age,class=="asd")[,3],subset(test_age,class=="hra")[,3])
+    res_asd_hra[i,which(age_list==age)+1]=tt$p.value
+  }
+  i = i+1
+}
+res_asd_hra_bin=res_asd_hra
+for(col in c(2:8)){
+  res_asd_hra_bin[,col]=ifelse(res_asd_hra_bin[,col]>=0.05,0,1)
+}
+```
+
+Number of variables that have significant average difference between `asd` and `hra` for at least one time point over age 3 - 36 month:  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+res_asd_hra_bin$age3t12 = apply(res_asd_hra_bin[2:5],1,sum)
+res_asd_hra_bin_sub=subset(res_asd_hra_bin,age3t12==4)
+res_asd_hra_bin$age3t36 = apply(res_asd_hra_bin[2:8],1,sum)
+res_asd_hra_3t36=subset(res_asd_hra_bin,age3t36>=1)
+dim(res_asd_hra_bin_sub)
+dim(res_asd_hra_3t36)
+#res_asd_hra_3t36
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+res_typ_hra = data.frame(matrix(NA, nrow=912, ncol = 8))
+names(res_typ_hra)=c("variable","age3", "age6","age9", "age12","age18","age24","age36")
+age_list=sort(unique(traj_test$Age))
+i = 1
+for(var in names(traj_test)[5:916]){
+  test_set = subset(traj_test[,c("Age","class",var)],class != "asd")
+  res_typ_hra[i,1]=var
+  for(age in unique(test_set$Age)){
+    test_age = subset(test_set,Age==age)
+    tt = t.test(subset(test_age,class=="typ")[,3],subset(test_age,class=="hra")[,3])
+    res_typ_hra[i,which(age_list==age)+1]=tt$p.value
+  }
+  i = i+1
+}
+res_typ_hra_bin=res_typ_hra
+for(col in c(2:8)){
+  res_typ_hra_bin[,col]=ifelse(res_typ_hra_bin[,col]>=0.05,0,1)
+}
+```
+
+Number of variables that have significant average difference between `typ` and `hra` for at least one time point:  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+res_typ_hra_bin$age3t12 = apply(res_typ_hra_bin[2:5],1,sum)
+res_typ_hra_bin_sub=subset(res_typ_hra_bin,age3t12==4)
+res_typ_hra_bin$age3t36 = apply(res_typ_hra_bin[2:8],1,sum)
+res_typ_hra_3t36=subset(res_typ_hra_bin,age3t36>=1)
+dim(res_typ_hra_bin_sub)
+dim(res_typ_hra_3t36)
+#res_typ_hra_3t36
+```
+
+Intersection of the signficant variables
+```
+significantly different between **asd** and **typ** for at least one time point   
+significantly different between **asd** and **hra** for at least one time point  
+significantly different between **typ** and **hra** for at least one time point   
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+intersect(res_typ_hra_3t36$variable,intersect(res_asd_hra_3t36$variable,res_asd_typ_3t36$variable))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C3.SampE.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = O1.SampE.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F7.SampE.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Pz.SampE.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = P7.SampE.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C3.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = O1.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+#ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F4.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+#ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F8.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+#ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Fp2.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+#ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = P3.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+#ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Pz.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+#ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = T8.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = P7.RR.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+#ggsave("C:/Longitudinal-Project/plots/C3_sampE_s2.jpeg", width=35, height=30, units = "cm")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = O1.DET.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = O2.DET.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F7.DET.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F8.DET.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Pz.DET.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = T8.DET.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = P7.DET.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = O1.LAM.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F7.LAM.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = P7.LAM.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C3.L_entr.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C4.L_entr.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = O1.L_entr.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F8.L_entr.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = Pz.L_entr.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = P7.L_entr.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = C4.L_max.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = O2.L_max.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F3.L_max.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F7.L_max.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F8.L_mean.s0) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F8.L_mean.s1) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F4.TT.s3) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+g = ggplot(data=traj_test,aes(x = Age, y = F3.TT.s4) )
+g+geom_point(aes(color=class))+geom_smooth(aes(group=class, color=class))
+#g+geom_point(aes(color=class2))+geom_smooth(aes(group=class2, color=class2))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+c3sampes2_typ = polyfitGC(C3.SampE.s2~Age, data = traj_test%>%filter(class2=="typ"),degree = 4)
+c3sampes2_asd = polyfitGC(C3.SampE.s2~Age, data = traj_test%>%filter(class2=="asd"),degree = 4)
+plot(c3sampes2_asd)
+plot(c3sampes2_typ)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

@@ -8,6 +8,10 @@ library(dplyr)
 #install.packages("mi)
 library(mi)
 library(gplots)
+#install.packages("rgl")
+#install.packages("car")
+library(rgl)
+library(car)
 
 ###Import
 setwd("C:/Longitudinal-Project")
@@ -123,3 +127,6 @@ data("TO1adj")
 outex = crimCV(TO1adj,2,dpolyp = 3, rcv = T)
 plot(outex)
 summary(outex)
+
+
+#scatter3d(traj_test$Age,traj_test$class1, traj_test$Fp1.SampE.s2)
