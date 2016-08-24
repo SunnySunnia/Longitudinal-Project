@@ -1,13 +1,14 @@
-##Goal:  
-Given labeled data (i.e. TMI vs non-TMI), analyze the diffence in the data behaviors, model the trajectories, and assess risk among the groups.  
-* What features and how many features to model? ---->`feature selection`  
-* use case: given a value(or set of values) at a time point (9-month-old), assess the risk of having the disease.  
-* so the model has to be sensitive to **time** of course, secondly will be **segmental change over time** from the past of the same subject (i.e. a certain elevation in the features over 3 months will 'qualifies' the subject to a higher risk?) 
-* look for influetial **features** that help assessing risk (i.e. a boy is more likely to have autism than a girl)  
+##Goal: 
+Given a labeled dataset (i.e. TMI vs non-TMI), we analyze and distinguish the differences in the profilesâ€™ behaviors, predict and forecast the trajectory model and its trends, and then assess risk factors among these groups. The problems we encounter are the followings: 
+*	Feature Selection: What features and how many features to model? 
+*	Use Case: given a recorded data or a set of meaningful signals at a time point (i.e. 9 months from the incidence), assess the risk of having the disorder.
+*	In the matter of fact, the model is sensitive to **time**, however there will be **segmental changes over time** of the same subject (i.e. a certain degree of elevation in some features over the past 3 months may â€œqualifyâ€ the subject to a higher risk.)
+*	Looking for influential features such as age and gender that help to assess risks (i.e. a boy is more likely to have autism than a girl)
 
 
 
-##Analysis/Modeling approaches:  
+
+##Analysis/Modeling Approaches:  
 
 ###Linear Mixed Effects Regression (LMER)  
 -------------------------  
@@ -126,13 +127,15 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 * posterior probabilities for group assignment: given the modeled trajectory, what is the probability of a group assignment.  
         - 
 
-###Application/Approach with EEG data:  
+###Application on EEG data:  
 ------------------------  
-**Goal**  
-- find trends/general trajectories of the EEG measurements for normal and autism group  
-- given a set of measures over time from a new subject,  able to compare against the group trajectories and determine whether the new trajectories are more likely to belong to the normal group or the autism group  
-	- risk assessment given not just a one-time measurement but a trajectory of measurements  
  
+**Result of the project**: 
+
+*	We found the trends and trajectory model of the EEG measurements for each groups: normal, high risk, and diagnosed with autism.
+*	given a set of measures over time from a new subject, we are able to compare against the group trajectories and determine whether the new trajectories are more likely to belong to the normal group or the autism group
+*	risk assessment given not just a one-time measurement but a trajectory of measurements
+
 
 **Data Structure**  
 - multiple records for one subject (at time points 3, 6, 9, 12, 18, 24, 36 months of age)  
@@ -142,11 +145,11 @@ subid | read.5 | read.6 | read.7 | read.8 | risk | gen | eth | ell | sped | att
 	- gender
 	- class: indicator (asd-autism, typ-normal, hra-high risk autism but do not have autism)  
 - Measurements:  
-	- sensor or channel (19):  
-` ["C3", "C4", "O1", "O2", "Cz", "F3", "F4", "F7", "F8", "Fz", "Fp1", "Fp2", "P3", "P4", "Pz", "T7", "T8", "P7", "P8"]`  
-	- features (9):   
-` ['Power', 'SampE', 'RR', 'DET', 'LAM', 'L_entr', 'L_max', 'L_mean', 'TT']`  
-	- Frequency band or scale (6):  
+	- sensorÂ orÂ channelÂ (19):  
+`Â ["C3",Â "C4",Â "O1",Â "O2",Â "Cz",Â "F3",Â "F4",Â "F7",Â "F8",Â "Fz",Â "Fp1",Â "Fp2",Â "P3",Â "P4", "Pz",Â "T7",Â "T8",Â "P7",Â "P8"]`  
+	- featuresÂ (9):Â   
+` ['Power',Â 'SampE',Â 'RR',Â 'DET',Â 'LAM',Â 'L_entr',Â 'L_max',Â 'L_mean',Â 'TT']`  
+	- FrequencyÂ bandÂ orÂ scaleÂ (6):Â Â 
 ` [0,1,2,3,4,5]`  
 	Example: `C3.Power.s0`  
 
